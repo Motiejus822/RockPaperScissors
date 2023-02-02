@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock, Paper, Scissors Game</title>
+</head>
+<body>
+  <h1>Rock, Paper, Scissors Game</h1>
+  <p>Choose one of the options below:</p>
+  <button id="rock">Rock</button>
+  <button id="paper">Paper</button>
+  <button id="scissors">Scissors</button>
+  <br><br>
+  <p id="result"></p>
+  <script>
+    const buttons = document.querySelectorAll("button");
+    const result = document.querySelector("#result");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", playGame);
+    });
+
+    function playGame(e) {
+      const playerSelection = e.target.id;
+      const computerSelection = getComputerSelection();
+      const winner = getWinner(playerSelection, computerSelection);
+
+      showResult(winner, playerSelection, computerSelection);
+    }
+
+    function getComputerSelection() {
+      const choices = ["rock", "paper", "scissors"];
+      const randomIndex = Math.floor(Math.random() * 3);
+
+      return choices[randomIndex];
+    }
+
+    function getWinner(playerSelection, computerSelection) {
+      if (playerSelection === computerSelection) {
+        return "tie";
+      } else if (
+        (playerSelection === "rock" && computerSelection === "scissors") ||
+        (playerSelection === "paper" && computerSelection === "rock") ||
+        (playerSelection === "scissors" && computerSelection === "paper")
+      ) {
+        return "player";
+      } else {
+        return "computer";
+      }
+    }
+
+    function showResult(winner, playerSelection, computerSelection) {
+      if (winner === "tie") {
+        result.innerHTML = `It's a tie! You both chose ${playerSelection}.`;
+      } else if (winner === "player") {
+        result.innerHTML = `You win! ${playerSelection} beats ${computerSelection}.`;
+      } else {
+        result.innerHTML = `You lose! ${computerSelection} beats ${playerSelection}.`;
+      }
+    }
+  </script>
+</body>
+</html>
